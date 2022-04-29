@@ -1,6 +1,6 @@
-package com.gameProj.screen;
+package com.gameProj.screen.gui;
 
-import com.gameProj.gameObjects.IGameObject;
+import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
 
 import java.awt.*;
 import java.util.ArrayList;

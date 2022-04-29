@@ -7,6 +7,6 @@ public interface IWindowSettings {
     double getScopeXMoveCoef();
     double getScopeYMoveCoef();
     double getImageSizeCoef();
-    double getScopeSizeCoef();
+    double getScopeAndBackgroundSizeCoef();
 
 }

@@ -1,4 +1,4 @@
-package com.gameProj.screen;
+package com.gameProj.screen.utilities;
 
 import com.gameProj.constants.IGameProjectConstants;
 

@@ -1,4 +1,6 @@
-package com.gameProj.gameObjects;
+package com.gameProj.gameObjects.player;
+
+import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
 
 import java.util.ArrayList;
 

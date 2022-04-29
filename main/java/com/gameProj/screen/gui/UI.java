@@ -1,8 +1,10 @@
-package com.gameProj.screen;
+package com.gameProj.screen.gui;
 
 import com.gameProj.constants.IGameProjectConstants;
-import com.gameProj.gameObjects.IGameObject;
+import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
 import com.gameProj.gameObjects.Scopes.SimpleCursor;
+import com.gameProj.screen.utilities.ImageResizer;
+import com.gameProj.screen.GameCanvas;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -41,8 +43,8 @@ public class UI implements IGUI, IGameProjectConstants {
         mapXRation = xR/(double)panel_w;
 
         try {
-            heartFilled = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(MyPanel.class.getResource("/images/HeartFilled.png"))));
-            heartEmpty = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(MyPanel.class.getResource("/images/HeartEmpty.png"))));
+            heartFilled = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/HeartFilled.png"))));
+            heartEmpty = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/HeartEmpty.png"))));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,8 +1,8 @@
-package com.gameProj.gameObjects;
+package com.gameProj.gameObjects.gameObjectsWithBehavior.enemy;
 
 import com.gameProj.constants.IGameProjectConstants;
-import com.gameProj.screen.ImageResizer;
-import com.gameProj.screen.MyPanel;
+import com.gameProj.screen.utilities.ImageResizer;
+import com.gameProj.screen.GameCanvas;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -165,10 +165,10 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
         directionY = Direction();
 
         try {
-            enemyIdle = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(MyPanel.class.getResource("/images/enemy.png"))));
-            enemyMv1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(MyPanel.class.getResource("/images/enemyWalkFront1.png"))));
-            enemyMv2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(MyPanel.class.getResource("/images/enemyWalkFront2.png"))));
-            enemyDead = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(MyPanel.class.getResource("/images/enemy.png"))));
+            enemyIdle = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/enemy.png"))));
+            enemyMv1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/enemyWalkFront1.png"))));
+            enemyMv2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/enemyWalkFront2.png"))));
+            enemyDead = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/enemy.png"))));
             enemyImg = enemyIdle;
         } catch (IOException ioe) {
             ioe.printStackTrace();

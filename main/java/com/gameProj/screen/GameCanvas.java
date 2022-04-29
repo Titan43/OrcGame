@@ -3,31 +3,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-//import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.gameProj.constants.IGameProjectConstants;
-import com.gameProj.gameObjects.*;
 import com.gameProj.gameObjects.Scopes.IScope;
 import com.gameProj.gameObjects.Scopes.Scope1;
 import com.gameProj.gameObjects.Scopes.SimpleCursor;
+import com.gameProj.gameObjects.background.Background;
+import com.gameProj.gameObjects.background.IBackground;
+import com.gameProj.gameObjects.gameObjectsWithBehavior.enemy.Enemy;
+import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
+import com.gameProj.gameObjects.player.IPlayer;
+import com.gameProj.gameObjects.player.Player;
+import com.gameProj.screen.gui.IGUI;
+import com.gameProj.screen.gui.UI;
 import com.gameProj.screen.settings.difficultySettings.IDifficultySettings;
 import com.gameProj.screen.settings.windowSettings.IWindowSettings;
+import com.gameProj.screen.utilities.ImageResizer;
 
-public class MyPanel extends JPanel implements Runnable, IGameProjectConstants, MouseListener {
+public class GameCanvas extends JPanel implements Runnable, IGameProjectConstants, MouseListener {
 
     private final ArrayList<IGameObject> enemies = new ArrayList<>();
     private IScope scope;
     private IGUI gui;
     private IPlayer player;
-
-    //private BufferedImage background;
+    private IBackground background;
 
     private final IDifficultySettings difficultySettings;
     private final IWindowSettings windowSettings;
 
-    private static MyPanel panel = null;
+    private static GameCanvas panel = null;
 
     private void SpawnEnemies(IGameObject enemy){
 
@@ -50,19 +55,18 @@ public class MyPanel extends JPanel implements Runnable, IGameProjectConstants, 
         SimpleCursor.setSimpleCursorSettings(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight());
 
         player = Player.getInstance(difficultySettings.getNumberOfLives());
-
-        scope = Scope1.getInstance(windowSettings.getScopeXMoveCoef(), windowSettings.getScopeYMoveCoef(), windowSettings.getScopeSizeCoef(), new ImageResizer(windowSettings.getScopeSizeCoef()));
+        background = Background.getInstance(new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
+        scope = Scope1.getInstance(windowSettings.getScopeXMoveCoef(), windowSettings.getScopeYMoveCoef(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
+        gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), new ImageResizer(windowSettings.getImageSizeCoef()));
 
         SpawnEnemies(enemy);
-
-        gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), new ImageResizer(windowSettings.getImageSizeCoef()));
 
         Thread gameThread = new Thread(this);
         gameThread.start();
 
     }
 
-    private MyPanel(IDifficultySettings difficultySettings, IWindowSettings windowSettings){
+    private GameCanvas(IDifficultySettings difficultySettings, IWindowSettings windowSettings){
 
         this.windowSettings = windowSettings;
         this.setPreferredSize(new Dimension(windowSettings.getPanel_w(), windowSettings.getPanel_h()));
@@ -76,11 +80,11 @@ public class MyPanel extends JPanel implements Runnable, IGameProjectConstants, 
         GameStart();
     }
 
-    public static MyPanel getInstance(IDifficultySettings difficultySettings, IWindowSettings windowSettings){
+    public static GameCanvas getInstance(IDifficultySettings difficultySettings, IWindowSettings windowSettings){
 
         if(panel == null){
 
-            panel = new MyPanel(difficultySettings, windowSettings);
+            panel = new GameCanvas(difficultySettings, windowSettings);
 
         }
 
@@ -124,9 +128,10 @@ public class MyPanel extends JPanel implements Runnable, IGameProjectConstants, 
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
 
+        background.drawBackground(g2D);
+
         int numberOfEnemies = enemies.size();
         for (int i = 0; i<numberOfEnemies; ++i) {
-
 
             enemies.get(i).Move(windowSettings.getPanel_w(), windowSettings.getPanel_h());
             g2D.drawImage(enemies.get(i).getImage(), enemies.get(i).getX(), enemies.get(i).getY(), null);

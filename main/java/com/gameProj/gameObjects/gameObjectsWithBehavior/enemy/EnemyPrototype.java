@@ -1,6 +1,8 @@
-package com.gameProj.gameObjects;
+package com.gameProj.gameObjects.gameObjectsWithBehavior.enemy;
 
-public abstract class EnemyPrototype implements IGameObject{
+import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
+
+public abstract class EnemyPrototype implements IGameObject {
 
     private final int hp;
     private final int dmg;

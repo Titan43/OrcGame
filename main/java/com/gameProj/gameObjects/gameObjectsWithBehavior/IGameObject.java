@@ -1,4 +1,4 @@
-package com.gameProj.gameObjects;
+package com.gameProj.gameObjects.gameObjectsWithBehavior;
 
 import java.awt.image.BufferedImage;
 

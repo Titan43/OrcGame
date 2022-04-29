@@ -31,7 +31,7 @@ public class MediumWindow implements IWindowSettings{
     }
 
     @Override
-    public double getScopeSizeCoef() {
+    public double getScopeAndBackgroundSizeCoef() {
         return 0.833;
     }
 

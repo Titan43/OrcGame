@@ -11,7 +11,7 @@ public class GameScreen extends JFrame{
 
     public GameScreen(IDifficultySettings difficultySettings, IWindowSettings windowSettings){
 
-        MyPanel panel = MyPanel.getInstance(difficultySettings, windowSettings);
+        GameCanvas panel = GameCanvas.getInstance(difficultySettings, windowSettings);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.add(panel);
             this.setResizable(false);

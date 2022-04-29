@@ -31,7 +31,7 @@ public class BigWindow implements IWindowSettings{
     }
 
     @Override
-    public double getScopeSizeCoef() {
+    public double getScopeAndBackgroundSizeCoef() {
         return 1.0;
     }
 }
