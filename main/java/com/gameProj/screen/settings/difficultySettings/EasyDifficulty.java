@@ -40,11 +40,4 @@ public class EasyDifficulty implements IDifficultySettings {
 
     }
 
-    @Override
-    public int getEnemyCloneNumber(){
-
-        return 2;
-
-    }
-
 }

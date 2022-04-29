@@ -1,7 +1,7 @@
 package com.gameProj.gameObjects.background;
 
 import com.gameProj.screen.utilities.ImageResizer;
-import com.gameProj.screen.GameCanvas;
+import com.gameProj.screen.GameScreen;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class Background implements IBackground{
     private Background(ImageResizer resizer){
 
         try{
-            backgroundImage = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/background.png"))));
+            backgroundImage = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/background.png"))));
         }
         catch (IOException ioe) {
             ioe.printStackTrace();

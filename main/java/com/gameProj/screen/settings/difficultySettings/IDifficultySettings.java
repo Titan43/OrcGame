@@ -7,6 +7,5 @@ public interface IDifficultySettings {
     int getEnemyDamage();
     int getEnemyHp();
     int getEnemySpeed();
-    int getEnemyCloneNumber();
 
 }

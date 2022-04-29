@@ -2,7 +2,7 @@ package com.gameProj.gameObjects.Scopes;
 
 import com.gameProj.constants.IGameProjectConstants;
 import com.gameProj.screen.utilities.ImageResizer;
-import com.gameProj.screen.GameCanvas;
+import com.gameProj.screen.GameScreen;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -42,13 +42,13 @@ public class Scope1 implements IScope, IGameProjectConstants {
         this.scopeYMoveCoef = scopeYMoveCoef;
 
         try {
-            scopeImg = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/scope.png"))));
+            scopeImg = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/scope.png"))));
 
             resizer.setImageSizeCoef(imageSizeCoef);
 
-            shotAnimationFrame1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/scope.png"))));
-            shotAnimationFrame2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/scope.png"))));
-            shotAnimationFrame3 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameCanvas.class.getResource("/images/scope.png"))));
+            shotAnimationFrame1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/Shot1.png"))));
+            shotAnimationFrame2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/Shot2.png"))));
+            shotAnimationFrame3 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/Shot3.png"))));
 
         } catch (IOException ioe) {
             ioe.printStackTrace();

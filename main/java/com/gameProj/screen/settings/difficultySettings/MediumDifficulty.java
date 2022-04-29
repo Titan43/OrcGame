@@ -39,11 +39,4 @@ public class MediumDifficulty implements IDifficultySettings {
 
     }
 
-    @Override
-    public int getEnemyCloneNumber(){
-
-        return 3;
-
-    }
-
 }

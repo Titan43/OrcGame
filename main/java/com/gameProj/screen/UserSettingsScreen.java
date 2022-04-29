@@ -94,7 +94,7 @@ public class UserSettingsScreen extends JFrame{
 
                 checkSettings();
 
-                new GameScreen(difficultySettings, windowSettings);
+                new GameFrame(difficultySettings, windowSettings);
 
                 context.close();
                 dispose();
