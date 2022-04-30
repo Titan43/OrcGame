@@ -5,7 +5,6 @@ import com.gameProj.screen.utilities.ImageResizer;
 import com.gameProj.screen.GameScreen;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -15,7 +14,8 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     private boolean switch1 = false;
     private boolean isMoving = true;
     private boolean isDead = false;
-    private boolean wasShootingOrMultiplying = false;
+    private boolean isSoundPlaying;
+    private boolean wasShoutingOrMultiplying = false;
 
     private BufferedImage enemyImg;
     private BufferedImage enemyMv1, enemyMv2, enemyIdle, enemyDead;
@@ -35,6 +35,18 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
 
         return !isDead;
 
+    }
+
+    @Override
+    public void setSoundPlaying(boolean isSoundPlaying){
+
+        this.isSoundPlaying = isSoundPlaying;
+
+    }
+
+    @Override
+    public String getSound() {
+        return "enemy_shout.wav";
     }
 
     @Override
@@ -82,19 +94,20 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
 
     private int TryToShootOrMultiply(){
 
-        if(!wasShootingOrMultiplying && !isDead) {
+        if(!wasShoutingOrMultiplying && !isDead) {
             int chanceToShoot = (int)(Math.random() * 10000);
-            if (chanceToShoot == 34) {
+            if (chanceToShoot == 34 || chanceToShoot == 4545 && !isSoundPlaying) {
 
                 ToggleMoving();
-                wasShootingOrMultiplying = true;
+                wasShoutingOrMultiplying = true;
+                isSoundPlaying = true;
                 return 1;
 
             }
             else if(chanceToShoot == 45) {
 
                 ToggleMoving();
-                wasShootingOrMultiplying = true;
+                wasShoutingOrMultiplying = true;
                 return 2;
             }
         }
@@ -105,7 +118,7 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
             if(framesAfterShotOrMultiplication >= 70) {
                 ToggleMoving();
                 framesAfterShotOrMultiplication = 0;
-                wasShootingOrMultiplying = false;
+                wasShoutingOrMultiplying = false;
             }
 
         }
@@ -156,8 +169,8 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
         }
     }
 
-    public Enemy(int hp, int dmg, int enemySpeed, int xC, int yC, ImageResizer resizer) {
-        super(hp, dmg, xC, yC);
+    public Enemy(int hp, int enemySpeed, int xC, int yC, ImageResizer resizer) {
+        super(hp, xC, yC);
 
         this.resizer = resizer;
         this.enemySpeed = enemySpeed;
@@ -180,7 +193,7 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     @Override
     public EnemyPrototype Clone() {
 
-        return new Enemy(this.getHP(), this.getDmg(), this.enemySpeed, this.getX(), this.getY(), this.resizer);
+        return new Enemy(this.getHP(), this.enemySpeed, this.getX(), this.getY(), this.resizer);
 
     }
 }

@@ -25,13 +25,15 @@ public class UI implements IGUI, IGameProjectConstants {
 
     private BufferedImage heartFilled;
     private BufferedImage heartEmpty;
+    private BufferedImage lossImage;
+    private BufferedImage victoryImage;
 
     private int mX;
     private int mY;
 
     private static UI ui = null;
 
-    private UI(int PANEL_W, int PANEL_H, int enemyHeight, int enemyWidth, ImageResizer resizer){
+    private UI(int PANEL_W, int PANEL_H, int enemyHeight, int enemyWidth, double imageSizeCoef, ImageResizer resizer){
 
         panel_w = PANEL_W;
         panel_h = PANEL_H;
@@ -46,14 +48,18 @@ public class UI implements IGUI, IGameProjectConstants {
             heartFilled = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/HeartFilled.png"))));
             heartEmpty = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/HeartEmpty.png"))));
 
+            resizer.setImageSizeCoef(imageSizeCoef);
+            lossImage = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/loss.png"))));
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static UI getInstance(int PANEL_W, int PANEL_H, int enemyHeight, int enemyWidth, ImageResizer resizer){
+    public static UI getInstance(int PANEL_W, int PANEL_H, int enemyHeight, int enemyWidth, double imageSizeCoef, ImageResizer resizer){
 
-        if(ui == null) ui = new UI(PANEL_W, PANEL_H, enemyHeight, enemyWidth, resizer);
+        if(ui == null) ui = new UI(PANEL_W, PANEL_H, enemyHeight, enemyWidth, imageSizeCoef, resizer);
         return ui;
 
     }
@@ -134,7 +140,7 @@ public class UI implements IGUI, IGameProjectConstants {
     public void drawLoss(Graphics g) {
 
         g.setColor(Color.red);
-        g.fillRect(0, 0, panel_w, panel_h);
+        g.drawImage(lossImage, 0, 0, null);
 
     }
 

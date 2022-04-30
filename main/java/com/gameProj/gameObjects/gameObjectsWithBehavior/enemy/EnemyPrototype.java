@@ -5,7 +5,6 @@ import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
 public abstract class EnemyPrototype implements IGameObject {
 
     private final int hp;
-    private final int dmg;
     private int x;
     private int y;
 
@@ -44,17 +43,9 @@ public abstract class EnemyPrototype implements IGameObject {
 
     }
 
-    @Override
-    public int getDmg(){
-
-        return dmg;
-
-    }
-
-    public EnemyPrototype(int hp, int dmg, int x, int y){
+    public EnemyPrototype(int hp, int x, int y){
 
         this.hp = hp;
-        this.dmg = dmg;
         this.x = x;
         this.y = y;
 

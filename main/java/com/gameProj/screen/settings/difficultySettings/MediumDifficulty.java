@@ -20,13 +20,6 @@ public class MediumDifficulty implements IDifficultySettings {
     }
 
     @Override
-    public int getEnemyDamage(){
-
-        return 1;
-
-    }
-
-    @Override
     public int getEnemyHp(){
 
         return 2;
@@ -35,7 +28,7 @@ public class MediumDifficulty implements IDifficultySettings {
     @Override
     public int getEnemySpeed(){
 
-        return 8;
+        return 10;
 
     }
 

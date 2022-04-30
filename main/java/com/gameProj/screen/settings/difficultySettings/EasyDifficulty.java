@@ -20,13 +20,6 @@ public class EasyDifficulty implements IDifficultySettings {
     }
 
     @Override
-    public int getEnemyDamage(){
-
-        return 1;
-
-    }
-
-    @Override
     public int getEnemyHp(){
 
         return 1;
@@ -36,7 +29,7 @@ public class EasyDifficulty implements IDifficultySettings {
     @Override
     public int getEnemySpeed(){
 
-        return 6;
+        return 8;
 
     }
 

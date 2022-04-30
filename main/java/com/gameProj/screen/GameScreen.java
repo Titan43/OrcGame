@@ -53,7 +53,7 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
     private void GameStart(){
 
-        IGameObject enemy = new Enemy(difficultySettings.getEnemyHp(), difficultySettings.getEnemyDamage(), difficultySettings.getEnemySpeed(), 2300, 2300, new ImageResizer(windowSettings.getImageSizeCoef()));
+        IGameObject enemy = new Enemy(difficultySettings.getEnemyHp(), difficultySettings.getEnemySpeed(), 2300, 2300, new ImageResizer(windowSettings.getImageSizeCoef()));
         enemy.ToggleMoving();
 
         SimpleCursor.setSimpleCursorSettings(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight());
@@ -61,9 +61,11 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
         player = Player.getInstance(difficultySettings.getNumberOfLives());
         background = Background.getInstance(new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
         scope = Scope1.getInstance(windowSettings.getScopeXMoveCoef(), windowSettings.getScopeYMoveCoef(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
-        gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), new ImageResizer(windowSettings.getImageSizeCoef()));
+        gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getImageSizeCoef()));
 
-        audioController = new AudioController(scope.getSound());
+        audioController = new AudioController(scope.getSound(), enemy.getSound());
+        audioController.changeVolume(0, -12);
+        audioController.changeVolume(1, -12);
 
         SpawnEnemies(enemy);
 
@@ -104,7 +106,7 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
         if(interactionResult == 1){
 
-            player.getDamaged(gameObject.getDmg());
+            gameObject.setSoundPlaying(audioController.playEffectSound(2));
 
         }
         else if(interactionResult == 2 && enemies.size()<20){
@@ -113,7 +115,6 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
             player.setSpecialEventHappened(true);
 
         }
-
     }
 
     public void gameEnd(Graphics g){

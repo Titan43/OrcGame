@@ -6,32 +6,56 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AudioController{
 
-    private Clip shotClip;
+    private final ArrayList<Clip> clips = new ArrayList<>();
 
-    public AudioController(String sound){
-
+    private Clip createClip(String sound){
+        Clip tmpClip = null;
         try {
             File effectSound = new File(Objects.requireNonNull(GameScreen.class.getResource("/Sounds/" + sound)).toURI());
-            shotClip = AudioSystem.getClip();
-            shotClip.open(AudioSystem.getAudioInputStream(effectSound));
-            FloatControl volume1 = (FloatControl) shotClip.getControl(FloatControl.Type.MASTER_GAIN);
-            volume1.setValue(-9);
+            tmpClip = AudioSystem.getClip();
+            tmpClip.open(AudioSystem.getAudioInputStream(effectSound));
 
         } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
+        return tmpClip;
     }
 
-    public void playEffectSound(int choice) {
+    public void changeVolume(int i, float volume){
 
-        if (choice == 1) {
-            shotClip.setMicrosecondPosition(0);
-            shotClip.start();
+        FloatControl settings = (FloatControl) clips.get(i).getControl(FloatControl.Type.MASTER_GAIN);
+        settings.setValue(volume);
+
+    }
+
+    public AudioController(String... sounds){
+
+        for(String sound :sounds){
+
+            clips.add(createClip(sound));
+
         }
+
+    }
+
+    public boolean playEffectSound(int choice) {
+
+        if (choice == 1 && clips.size()>0) {
+            clips.get(0).setMicrosecondPosition(0);
+            clips.get(0).start();
+        }
+        else if(choice == 2 && clips.size()>1){
+
+            clips.get(1).setMicrosecondPosition(0);
+            clips.get(1).start();
+
+        }
+        return false;
     }
 }

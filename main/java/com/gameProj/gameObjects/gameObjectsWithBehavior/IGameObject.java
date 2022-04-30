@@ -13,12 +13,14 @@ public interface IGameObject {
 
     void setX(int x);
     void setY(int y);
+    void setSoundPlaying(boolean isSoundPlaying);
 
     int getX();
     int getY();
 
-    int getDmg();
     int getHP();
+
+    String getSound();
 
     Object Clone();
 
