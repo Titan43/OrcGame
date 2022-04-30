@@ -20,9 +20,9 @@ public class SimpleCursor {
 
     }
 
-    public static Cursor getCursor(){
+    public static Cursor getCursor(boolean isPlaying){
 
-        if(SimpleCursor.isCursorOutOfBounds()){
+        if(SimpleCursor.isCursorOutOfBounds() || !isPlaying){
 
             return Cursor.getDefaultCursor();
 

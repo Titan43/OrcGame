@@ -27,6 +27,11 @@ public class Scope1 implements IScope, IGameProjectConstants {
     private int y = 1;
 
     @Override
+    public String getSound() {
+        return "shot_sound.wav";
+    }
+
+    @Override
     public void setActionCoordsX(int actionCoordsX) {
         this.actionCoordsX = actionCoordsX;
     }

@@ -61,7 +61,7 @@ public class UI implements IGUI, IGameProjectConstants {
     private void drawEnemiesOnMap(Graphics g, ArrayList<IGameObject> enemies){
 
         for(IGameObject enemy: enemies) {
-            if (!enemy.isDead()) {
+            if (enemy.isAlive()) {
                 g.setColor(Color.RED);
             } else {
 

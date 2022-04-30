@@ -19,15 +19,19 @@ import com.gameProj.screen.gui.IGUI;
 import com.gameProj.screen.gui.UI;
 import com.gameProj.screen.settings.difficultySettings.IDifficultySettings;
 import com.gameProj.screen.settings.windowSettings.IWindowSettings;
+import com.gameProj.screen.utilities.AudioController;
 import com.gameProj.screen.utilities.ImageResizer;
 
 public class GameScreen extends JPanel implements Runnable, IGameProjectConstants, MouseListener {
 
     private final ArrayList<IGameObject> enemies = new ArrayList<>();
+    private final ArrayList<IGameObject> objectStorage = new ArrayList<>();
     private IScope scope;
     private IGUI gui;
     private IPlayer player;
     private IBackground background;
+
+    private AudioController audioController;
 
     private final IDifficultySettings difficultySettings;
     private final IWindowSettings windowSettings;
@@ -58,6 +62,8 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
         background = Background.getInstance(new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
         scope = Scope1.getInstance(windowSettings.getScopeXMoveCoef(), windowSettings.getScopeYMoveCoef(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
         gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), new ImageResizer(windowSettings.getImageSizeCoef()));
+
+        audioController = new AudioController(scope.getSound());
 
         SpawnEnemies(enemy);
 
@@ -101,9 +107,10 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
             player.getDamaged(gameObject.getDmg());
 
         }
-        else if(interactionResult == 2 && enemies.size()<22){
+        else if(interactionResult == 2 && enemies.size()<20){
 
-            enemies.add((Enemy) gameObject.Clone());
+            objectStorage.add((Enemy) gameObject.Clone());
+            player.setSpecialEventHappened(true);
 
         }
 
@@ -122,6 +129,16 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
     }
 
+    private void TryToAddObjects(){
+
+        if(player.specialEventHappened()) {
+            enemies.addAll(objectStorage);
+            player.setSpecialEventHappened(false);
+            objectStorage.clear();
+        }
+
+    }
+
     public void paint(Graphics g){
 
         super.paint(g);
@@ -129,20 +146,21 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
         background.drawBackground(g2D);
 
-        int numberOfEnemies = enemies.size();
-        for (int i = 0; i<numberOfEnemies; ++i) {
+        for (IGameObject enemy : enemies) {
 
-            enemies.get(i).Move(windowSettings.getPanel_w(), windowSettings.getPanel_h());
-            g2D.drawImage(enemies.get(i).getImage(), enemies.get(i).getX(), enemies.get(i).getY(), null);
-            Interact(enemies.get(i));
+            enemy.Move(windowSettings.getPanel_w(), windowSettings.getPanel_h());
+            g2D.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
+            Interact(enemy);
 
         }
+
+        TryToAddObjects();
 
         scope.tryToDrawShot(g2D, player.getNumberOfFramesAfterAction()/2);
 
         scope.AttachScope(g2D);
 
-        this.setCursor(SimpleCursor.getCursor());
+        this.setCursor(SimpleCursor.getCursor(player.isPlaying()));
 
         gui.drawUI(g2D, player.getNumberOfLives(), player.getNumberOfLivesLeft(), enemies);
 
@@ -184,6 +202,7 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
             scope.setActionCoordsX(e.getX());
             scope.setActionCoordsY(e.getY());
+            audioController.playEffectSound(1);
 
             for (IGameObject enemy : enemies) {
 

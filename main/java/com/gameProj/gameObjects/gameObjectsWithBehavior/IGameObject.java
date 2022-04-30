@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public interface IGameObject {
 
-    boolean isDead();
+    boolean isAlive();
     BufferedImage getImage();
     void ToggleMoving();
     void GetHit(int xC, int yC);

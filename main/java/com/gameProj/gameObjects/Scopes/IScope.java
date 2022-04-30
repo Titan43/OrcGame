@@ -8,5 +8,5 @@ public interface IScope {
     void AttachScope(Graphics g);
     void setActionCoordsX(int actionCoordsX);
     void setActionCoordsY(int actionCoordsY);
-
+    String getSound();
 }

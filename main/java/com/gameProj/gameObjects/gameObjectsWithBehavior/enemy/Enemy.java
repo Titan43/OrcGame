@@ -5,6 +5,7 @@ import com.gameProj.screen.utilities.ImageResizer;
 import com.gameProj.screen.GameScreen;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -30,9 +31,9 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     private final ImageResizer resizer;
 
     @Override
-    public boolean isDead(){
+    public boolean isAlive(){
 
-        return isDead;
+        return !isDead;
 
     }
 
@@ -168,7 +169,7 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
             enemyIdle = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemy.png"))));
             enemyMv1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyWalkFront1.png"))));
             enemyMv2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyWalkFront2.png"))));
-            enemyDead = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemy.png"))));
+            enemyDead = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyDead.png"))));
             enemyImg = enemyIdle;
         } catch (IOException ioe) {
             ioe.printStackTrace();

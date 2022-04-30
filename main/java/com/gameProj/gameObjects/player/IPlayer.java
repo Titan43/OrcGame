@@ -20,6 +20,8 @@ public interface IPlayer {
 
     void countFrames();
 
+    void setSpecialEventHappened(boolean specialEventHappened);
+
     int getNumberOfFramesAfterAction();
 
     boolean isAbleToInteract();
@@ -27,4 +29,8 @@ public interface IPlayer {
     void checkVictory(ArrayList<IGameObject> gameObjects);
 
     void getDamaged(int damage);
+
+    boolean specialEventHappened();
+
+
 }

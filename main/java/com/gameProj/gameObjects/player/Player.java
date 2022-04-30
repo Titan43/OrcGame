@@ -13,10 +13,23 @@ public class Player implements IPlayer{
     private boolean isGameContinued = true;
     private boolean isVictory = false;
     private boolean wasShooting = false;
+    private boolean specialEventHappened = false;
 
     private static Player player = null;
 
     private int framesAfterShot = 0;
+
+    @Override
+    public boolean specialEventHappened(){
+
+        return specialEventHappened;
+
+    }
+
+    @Override
+    public void setSpecialEventHappened(boolean specialEventHappened) {
+        this.specialEventHappened = specialEventHappened;
+    }
 
     @Override
     public int getNumberOfFramesAfterAction() {
@@ -75,7 +88,7 @@ public class Player implements IPlayer{
     @Override
     public boolean isAbleToInteract(){
 
-        if(!wasShooting){
+        if(!wasShooting && isPlaying){
 
             wasShooting = true;
             return true;
@@ -109,7 +122,7 @@ public class Player implements IPlayer{
 
         for (IGameObject gameObject: gameObjects) {
 
-            if(!gameObject.isDead()){
+            if(gameObject.isAlive()){
 
                 return;
 
