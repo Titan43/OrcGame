@@ -14,7 +14,6 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     private boolean switch1 = false;
     private boolean isMoving = true;
     private boolean isDead = false;
-    private boolean isSoundPlaying;
     private boolean wasShoutingOrMultiplying = false;
 
     private BufferedImage enemyImg;
@@ -34,13 +33,6 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     public boolean isAlive(){
 
         return !isDead;
-
-    }
-
-    @Override
-    public void setSoundPlaying(boolean isSoundPlaying){
-
-        this.isSoundPlaying = isSoundPlaying;
 
     }
 
@@ -75,14 +67,16 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     }
 
     @Override
-    public void GetHit(int xC, int yC){
+    public boolean GetHit(int xC, int yC){
 
         if(checkCollision(xC, yC)){
             if(!isDead) {
                 isDead = true;
                 enemyImg = enemyDead;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
@@ -96,11 +90,10 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
 
         if(!wasShoutingOrMultiplying && !isDead) {
             int chanceToShoot = (int)(Math.random() * 10000);
-            if (chanceToShoot == 34 || chanceToShoot == 4545 && !isSoundPlaying) {
+            if (chanceToShoot == 34 || chanceToShoot == 4545) {
 
                 ToggleMoving();
                 wasShoutingOrMultiplying = true;
-                isSoundPlaying = true;
                 return 1;
 
             }

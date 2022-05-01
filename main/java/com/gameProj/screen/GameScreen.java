@@ -64,8 +64,8 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
         gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getImageSizeCoef()));
 
         audioController = new AudioController(scope.getSound(), enemy.getSound());
-        audioController.changeVolume(0, -12);
-        audioController.changeVolume(1, -12);
+        audioController.changeVolume(0, -15);
+        audioController.changeVolume(1, -15);
 
         SpawnEnemies(enemy);
 
@@ -104,9 +104,9 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
         int interactionResult = gameObject.SpecialInteraction();
 
-        if(interactionResult == 1){
+        if(interactionResult == 1 && audioController.clipEnded(2)){
 
-            gameObject.setSoundPlaying(audioController.playEffectSound(2));
+            audioController.playEffectSound(2);
 
         }
         else if(interactionResult == 2 && enemies.size()<20){
@@ -205,13 +205,18 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
             scope.setActionCoordsY(e.getY());
             audioController.playEffectSound(1);
 
+            boolean hasMissed = true;
+
             for (IGameObject enemy : enemies) {
 
-                enemy.GetHit(e.getX(), e.getY());
+                if(enemy.GetHit(e.getX(), e.getY())) hasMissed = false;
 
             }
 
-            player.checkVictory(enemies);
+            if(hasMissed) player.getDamaged(1);
+            else {
+                player.checkVictory(enemies);
+            }
         }
     }
 

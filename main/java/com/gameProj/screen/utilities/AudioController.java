@@ -29,9 +29,10 @@ public class AudioController{
 
     public void changeVolume(int i, float volume){
 
-        FloatControl settings = (FloatControl) clips.get(i).getControl(FloatControl.Type.MASTER_GAIN);
-        settings.setValue(volume);
-
+        if(i>-1 && i<clips.size()) {
+            FloatControl settings = (FloatControl) clips.get(i).getControl(FloatControl.Type.MASTER_GAIN);
+            settings.setValue(volume);
+        }
     }
 
     public AudioController(String... sounds){
@@ -44,18 +45,21 @@ public class AudioController{
 
     }
 
-    public boolean playEffectSound(int choice) {
+    public boolean clipEnded(int choice){
 
-        if (choice == 1 && clips.size()>0) {
-            clips.get(0).setMicrosecondPosition(0);
-            clips.get(0).start();
-        }
-        else if(choice == 2 && clips.size()>1){
-
-            clips.get(1).setMicrosecondPosition(0);
-            clips.get(1).start();
-
+        if (clips.size()>choice-1 && choice > 0) {
+            return clips.get(choice - 1).getMicrosecondLength() == clips.get(choice - 1).getMicrosecondPosition() || clips.get(choice-1).getMicrosecondPosition() == 0;
         }
         return false;
+
+    }
+
+    public void playEffectSound(int choice) {
+
+        if (clips.size()>choice-1 && choice > 0) {
+            clips.get(choice-1).setMicrosecondPosition(0);
+            clips.get(choice-1).start();
+        }
+
     }
 }
