@@ -9,11 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Enemy extends EnemyPrototype implements IGameProjectConstants{
+public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
 
     private boolean switch1 = false;
     private boolean isMoving = true;
     private boolean isDead = false;
+    private boolean isLastItem = false;
     private boolean wasShoutingOrMultiplying = false;
 
     private BufferedImage enemyImg;
@@ -25,7 +26,7 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     private int frameSwitch = 0;
     private int framesAfterShotOrMultiplication = 0;
 
-    private final int enemySpeed;
+    private int enemySpeed;
 
     private final ImageResizer resizer;
 
@@ -33,6 +34,19 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     public boolean isAlive(){
 
         return !isDead;
+
+    }
+
+    @Override
+    public boolean isLastItem() {
+        return isLastItem;
+    }
+
+    @Override
+    public void setIsLastItem(boolean isLastItem){
+
+        enemySpeed -= 3;
+        this.isLastItem = isLastItem;
 
     }
 
@@ -88,35 +102,45 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
 
     private int TryToShootOrMultiply(){
 
-        if(!wasShoutingOrMultiplying && !isDead) {
-            int chanceToShoot = (int)(Math.random() * 10000);
-            if (chanceToShoot == 34 || chanceToShoot == 4545) {
+            if (!wasShoutingOrMultiplying && !isDead) {
+                int chanceToShoot = (int) (Math.random() * 10000);
+                if(!isLastItem) {
+                    if (chanceToShoot == 34 || chanceToShoot == 4545) {
 
-                ToggleMoving();
-                wasShoutingOrMultiplying = true;
-                return 1;
+                        ToggleMoving();
+                        wasShoutingOrMultiplying = true;
+                        return 1;
+
+                    } else if (chanceToShoot == 45) {
+
+                        ToggleMoving();
+                        wasShoutingOrMultiplying = true;
+                        return 2;
+                    }
+                } else {
+
+                    if (chanceToShoot == 34 || chanceToShoot == 45 || chanceToShoot == 11 || chanceToShoot == 47 || chanceToShoot == 4 || chanceToShoot == 7) {
+
+                        wasShoutingOrMultiplying = true;
+                        return 1;
+
+                    }
+
+                }
+
+            } else if (!isDead && !isLastItem) {
+
+                framesAfterShotOrMultiplication++;
+
+                if (framesAfterShotOrMultiplication >= 70) {
+                    ToggleMoving();
+                    framesAfterShotOrMultiplication = 0;
+                    wasShoutingOrMultiplying = false;
+                }
 
             }
-            else if(chanceToShoot == 45) {
 
-                ToggleMoving();
-                wasShoutingOrMultiplying = true;
-                return 2;
-            }
-        }
-        else if(!isDead){
-
-            framesAfterShotOrMultiplication++;
-
-            if(framesAfterShotOrMultiplication >= 70) {
-                ToggleMoving();
-                framesAfterShotOrMultiplication = 0;
-                wasShoutingOrMultiplying = false;
-            }
-
-        }
-
-        return 0;
+            return 0;
     }
 
     @Override
@@ -124,7 +148,11 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
         if(!isDead && isMoving){
         if(switch1 && frameSwitch >= TICKS_TO_SWITCH){
 
-            enemyImg = enemyMv2;
+            if(!isLastItem) {
+                enemyImg = enemyMv2;
+            }
+            else enemyImg = enemyIdle;
+
             switch1 = false;
             frameSwitch = 0;
 
@@ -132,7 +160,11 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
         else {
 
             if(frameSwitch >= TICKS_TO_SWITCH){
-                enemyImg = enemyMv1;
+                if(!isLastItem) {
+                    enemyImg = enemyMv1;
+                }
+                else enemyImg = enemyIdle;
+
                 switch1 = true;
                 frameSwitch = 0;
             }
@@ -140,12 +172,26 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
 
         frameSwitch ++;
 
-        if(getX()<= 0) {directionX = 1;  directionY = Direction();}
-        else if(getX()>=panel_w- enemyImg.getWidth() && directionX == 1) {directionX = -1; directionY = Direction();}
+        if(!isLastItem) {
+            if (getX() <= 0) {
+                directionX = 1;
+                directionY = Direction();
+            } else if (getX() >= panel_w - enemyImg.getWidth() && directionX == 1) {
+                directionX = -1;
+                directionY = Direction();
+            }
+        }
         setX(getX()+directionX* enemySpeed);
 
-        if(getY()<= 0) {directionY = 1; directionX = Direction();}
-        else if(getY()>=panel_h- 2*enemyImg.getHeight() && directionY == 1){ directionY = -1;  directionX = Direction();}
+        if(!isLastItem) {
+            if (getY() <= 0) {
+                directionY = 1;
+                directionX = Direction();
+            } else if (getY() >= panel_h - 2 * enemyImg.getHeight() && directionY == 1) {
+                directionY = -1;
+                directionX = Direction();
+            }
+        }
         setY(this.getY()+directionY* enemySpeed);
 
         }
@@ -184,7 +230,7 @@ public class Enemy extends EnemyPrototype implements IGameProjectConstants{
     }
 
     @Override
-    public EnemyPrototype Clone() {
+    public GameObjectPrototype Clone() {
 
         return new Enemy(this.getHP(), this.enemySpeed, this.getX(), this.getY(), this.resizer);
 

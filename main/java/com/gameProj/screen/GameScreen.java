@@ -104,9 +104,26 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
 
         int interactionResult = gameObject.SpecialInteraction();
 
-        if(interactionResult == 1 && audioController.clipEnded(2)){
+        if(interactionResult == 1){
 
-            audioController.playEffectSound(2);
+            if(gameObject.isLastItem()){
+
+                if(audioController.clipEnded(3)){
+
+                    audioController.playEffectSound(3);
+
+                }
+
+            }
+            else{
+
+                if(audioController.clipEnded(2)){
+
+                    audioController.playEffectSound(2);
+
+                }
+
+            }
 
         }
         else if(interactionResult == 2 && enemies.size()<20){
@@ -199,7 +216,7 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
     @Override
     public void mousePressed(MouseEvent e) {
 
-        if(player.isAbleToInteract()) {
+        if(player.isAbleToInteract()) {;
 
             scope.setActionCoordsX(e.getX());
             scope.setActionCoordsY(e.getY());
@@ -208,14 +225,15 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
             boolean hasMissed = true;
 
             for (IGameObject enemy : enemies) {
-
                 if(enemy.GetHit(e.getX(), e.getY())) hasMissed = false;
 
             }
 
             if(hasMissed) player.getDamaged(1);
             else {
+
                 player.checkVictory(enemies);
+
             }
         }
     }

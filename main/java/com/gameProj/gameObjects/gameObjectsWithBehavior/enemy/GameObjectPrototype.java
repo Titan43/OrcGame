@@ -2,7 +2,7 @@ package com.gameProj.gameObjects.gameObjectsWithBehavior.enemy;
 
 import com.gameProj.gameObjects.gameObjectsWithBehavior.IGameObject;
 
-public abstract class EnemyPrototype implements IGameObject {
+public abstract class GameObjectPrototype implements IGameObject {
 
     private final int hp;
     private int x;
@@ -43,7 +43,7 @@ public abstract class EnemyPrototype implements IGameObject {
 
     }
 
-    public EnemyPrototype(int hp, int x, int y){
+    public GameObjectPrototype(int hp, int x, int y){
 
         this.hp = hp;
         this.x = x;
@@ -53,6 +53,6 @@ public abstract class EnemyPrototype implements IGameObject {
 
 
     @Override
-    public abstract EnemyPrototype Clone();
+    public abstract GameObjectPrototype Clone();
 
 }

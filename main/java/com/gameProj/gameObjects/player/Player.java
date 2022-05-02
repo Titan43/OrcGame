@@ -120,19 +120,30 @@ public class Player implements IPlayer{
     @Override
     public void checkVictory(ArrayList<IGameObject> gameObjects){
 
+        int enemiesLeft = 0;
+        int lastAliveIndex = -1;
+
         for (IGameObject gameObject: gameObjects) {
 
-            if(gameObject.isAlive()){
-
-                return;
-
+            if(gameObject.isAlive()) {
+                enemiesLeft++;
+                lastAliveIndex = gameObjects.indexOf(gameObject);
             }
+            if(enemiesLeft > 1) return;
 
         }
 
-        isVictory = true;
-        isPlaying = false;
+        if(enemiesLeft == 1){
 
+            gameObjects.get(lastAliveIndex).setIsLastItem(true);
+
+        }
+        else{
+
+            isVictory = true;
+            isPlaying = false;
+
+        }
     }
 
     @Override
