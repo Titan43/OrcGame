@@ -63,9 +63,10 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
         scope = Scope1.getInstance(windowSettings.getScopeXMoveCoef(), windowSettings.getScopeYMoveCoef(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
         gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getImageSizeCoef()));
 
-        audioController = new AudioController(scope.getSound(), enemy.getSound());
+        audioController = new AudioController(scope.getSound(), enemy.getSound1(), enemy.getSound2());
         audioController.changeVolume(0, -15);
         audioController.changeVolume(1, -15);
+        audioController.changeVolume(2, -15);
 
         SpawnEnemies(enemy);
 
@@ -162,6 +163,8 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
 
+        player.checkVictory(enemies);
+
         background.drawBackground(g2D);
 
         for (IGameObject enemy : enemies) {
@@ -230,11 +233,7 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
             }
 
             if(hasMissed) player.getDamaged(1);
-            else {
 
-                player.checkVictory(enemies);
-
-            }
         }
     }
 

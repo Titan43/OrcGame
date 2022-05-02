@@ -18,7 +18,7 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     private boolean wasShoutingOrMultiplying = false;
 
     private BufferedImage enemyImg;
-    private BufferedImage enemyMv1, enemyMv2, enemyIdle, enemyDead;
+    private BufferedImage enemyMv1, enemyMv2, enemyIdle, enemyDead, enemyRunAway1, enemyRunAway2;
 
     private int directionX;
     private int directionY;
@@ -45,14 +45,19 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     @Override
     public void setIsLastItem(boolean isLastItem){
 
-        enemySpeed -= 3;
+        enemySpeed -= enemySpeed/3;
         this.isLastItem = isLastItem;
 
     }
 
     @Override
-    public String getSound() {
+    public String getSound1() {
         return "enemy_shout.wav";
+    }
+
+    @Override
+    public String getSound2() {
+        return "lms.wav";
     }
 
     @Override
@@ -96,15 +101,16 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     @Override
     public int SpecialInteraction(){
 
-        return TryToShootOrMultiply();
+        return TryToShoutOrMultiply();
 
     }
 
-    private int TryToShootOrMultiply(){
+    private int TryToShoutOrMultiply(){
 
             if (!wasShoutingOrMultiplying && !isDead) {
-                int chanceToShoot = (int) (Math.random() * 10000);
                 if(!isLastItem) {
+                    int chanceToShoot = (int) (Math.random() * 10000);
+
                     if (chanceToShoot == 34 || chanceToShoot == 4545) {
 
                         ToggleMoving();
@@ -117,9 +123,11 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
                         wasShoutingOrMultiplying = true;
                         return 2;
                     }
-                } else {
+                }
+                else {
 
-                    if (chanceToShoot == 34 || chanceToShoot == 45 || chanceToShoot == 11 || chanceToShoot == 47 || chanceToShoot == 4 || chanceToShoot == 7) {
+                    int chanceToShoot = (int) (Math.random() * 100);
+                    if (chanceToShoot == 34 || chanceToShoot == 45 || chanceToShoot == 11 || chanceToShoot == 47 || chanceToShoot == 4 || chanceToShoot == 7 || chanceToShoot == 44) {
 
                         wasShoutingOrMultiplying = true;
                         return 1;
@@ -128,12 +136,12 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
 
                 }
 
-            } else if (!isDead && !isLastItem) {
+            }
+            else if (!isDead) {
 
                 framesAfterShotOrMultiplication++;
-
                 if (framesAfterShotOrMultiplication >= 70) {
-                    ToggleMoving();
+                    if(!isLastItem) ToggleMoving();
                     framesAfterShotOrMultiplication = 0;
                     wasShoutingOrMultiplying = false;
                 }
@@ -151,7 +159,7 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
             if(!isLastItem) {
                 enemyImg = enemyMv2;
             }
-            else enemyImg = enemyIdle;
+            else enemyImg = enemyRunAway2;
 
             switch1 = false;
             frameSwitch = 0;
@@ -163,7 +171,7 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
                 if(!isLastItem) {
                     enemyImg = enemyMv1;
                 }
-                else enemyImg = enemyIdle;
+                else enemyImg = enemyRunAway1;
 
                 switch1 = true;
                 frameSwitch = 0;
@@ -194,6 +202,15 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
         }
         setY(this.getY()+directionY* enemySpeed);
 
+        if(isLastItem) {
+
+            if (getX() > panel_w || getX() < -enemyImg.getWidth() || getY() < -enemyImg.getHeight() || getY() > panel_h ){
+
+                ToggleMoving();
+                isDead = true;
+
+            }
+        }
         }
     }
 
@@ -222,6 +239,8 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
             enemyMv1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyWalkFront1.png"))));
             enemyMv2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyWalkFront2.png"))));
             enemyDead = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyDead.png"))));
+            enemyRunAway1 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyRunAway1.png"))));
+            enemyRunAway2 = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/enemyRunAway2.png"))));
             enemyImg = enemyIdle;
         } catch (IOException ioe) {
             ioe.printStackTrace();

@@ -23,7 +23,8 @@ public interface IGameObject {
 
     int getHP();
 
-    String getSound();
+    String getSound1();
+    String getSound2();
 
     Object Clone();
 
