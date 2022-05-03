@@ -16,6 +16,7 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     private boolean isDead = false;
     private boolean isLastItem = false;
     private boolean wasShoutingOrMultiplying = false;
+    private final String[] sounds = new String[]{"enemy_shout.wav", "lms.wav"};
 
     private BufferedImage enemyImg;
     private BufferedImage enemyMv1, enemyMv2, enemyIdle, enemyDead, enemyRunAway1, enemyRunAway2;
@@ -51,13 +52,8 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     }
 
     @Override
-    public String getSound1() {
-        return "enemy_shout.wav";
-    }
-
-    @Override
-    public String getSound2() {
-        return "lms.wav";
+    public String[] getSound() {
+        return sounds;
     }
 
     @Override

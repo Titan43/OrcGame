@@ -63,7 +63,7 @@ public class GameScreen extends JPanel implements Runnable, IGameProjectConstant
         scope = Scope1.getInstance(windowSettings.getScopeXMoveCoef(), windowSettings.getScopeYMoveCoef(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getScopeAndBackgroundSizeCoef()));
         gui = UI.getInstance(windowSettings.getPanel_w(), windowSettings.getPanel_h(), enemy.getImage().getHeight(), enemy.getImage().getWidth(), windowSettings.getScopeAndBackgroundSizeCoef(), new ImageResizer(windowSettings.getImageSizeCoef()));
 
-        audioController = new AudioController(scope.getSound(), enemy.getSound1(), enemy.getSound2());
+        audioController = new AudioController(scope.getSound(), enemy.getSound()[0], enemy.getSound()[1]);
         audioController.changeVolume(0, -15);
         audioController.changeVolume(1, -15);
         audioController.changeVolume(2, -15);
