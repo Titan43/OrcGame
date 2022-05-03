@@ -50,7 +50,7 @@ public class UI implements IGUI, IGameProjectConstants {
 
             resizer.setImageSizeCoef(imageSizeCoef);
             lossImage = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/loss.png"))));
-
+            victoryImage = resizer.resizeImage(ImageIO.read(Objects.requireNonNull(GameScreen.class.getResource("/images/Victory.png"))));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +132,7 @@ public class UI implements IGUI, IGameProjectConstants {
     public void drawVictory(Graphics g) {
 
         g.setColor(Color.green);
-        g.fillRect(0, 0, panel_w, panel_h);
+        g.drawImage(victoryImage, 0, 0, null);
 
     }
 
