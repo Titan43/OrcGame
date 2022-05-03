@@ -24,7 +24,7 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     private int directionY;
 
     private int frameSwitch = 0;
-    private int framesAfterShouttOrMultiplication = 0;
+    private int framesAfterShoutOrMultiplication = 0;
 
     private int enemySpeed;
 
@@ -139,10 +139,10 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
             }
             else if (!isDead) {
 
-                framesAfterShouttOrMultiplication++;
-                if (framesAfterShouttOrMultiplication >= 70) {
+                framesAfterShoutOrMultiplication++;
+                if (framesAfterShoutOrMultiplication >= 70) {
                     if(!isLastItem) ToggleMoving();
-                    framesAfterShouttOrMultiplication = 0;
+                    framesAfterShoutOrMultiplication = 0;
                     wasShoutingOrMultiplying = false;
                 }
 
