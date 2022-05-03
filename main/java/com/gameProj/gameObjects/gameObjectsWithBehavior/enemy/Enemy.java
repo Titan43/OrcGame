@@ -24,7 +24,7 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
     private int directionY;
 
     private int frameSwitch = 0;
-    private int framesAfterShotOrMultiplication = 0;
+    private int framesAfterShouttOrMultiplication = 0;
 
     private int enemySpeed;
 
@@ -109,15 +109,15 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
 
             if (!wasShoutingOrMultiplying && !isDead) {
                 if(!isLastItem) {
-                    int chanceToShoot = (int) (Math.random() * 10000);
+                    int chanceToShoutOrMultiply = (int) (Math.random() * 10000);
 
-                    if (chanceToShoot == 34 || chanceToShoot == 4545) {
+                    if (chanceToShoutOrMultiply == 34 || chanceToShoutOrMultiply == 4545 || chanceToShoutOrMultiply == 44) {
 
                         ToggleMoving();
                         wasShoutingOrMultiplying = true;
                         return 1;
 
-                    } else if (chanceToShoot == 45) {
+                    } else if (chanceToShoutOrMultiply == 45) {
 
                         ToggleMoving();
                         wasShoutingOrMultiplying = true;
@@ -126,8 +126,8 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
                 }
                 else {
 
-                    int chanceToShoot = (int) (Math.random() * 100);
-                    if (chanceToShoot == 34 || chanceToShoot == 45 || chanceToShoot == 11 || chanceToShoot == 47 || chanceToShoot == 4 || chanceToShoot == 7 || chanceToShoot == 44) {
+                    int chanceToShout = (int) (Math.random() * 100);
+                    if (chanceToShout == 34 || chanceToShout == 45 || chanceToShout == 11 || chanceToShout == 47 || chanceToShout == 4 || chanceToShout == 7 || chanceToShout == 44) {
 
                         wasShoutingOrMultiplying = true;
                         return 1;
@@ -139,10 +139,10 @@ public class Enemy extends GameObjectPrototype implements IGameProjectConstants{
             }
             else if (!isDead) {
 
-                framesAfterShotOrMultiplication++;
-                if (framesAfterShotOrMultiplication >= 70) {
+                framesAfterShouttOrMultiplication++;
+                if (framesAfterShouttOrMultiplication >= 70) {
                     if(!isLastItem) ToggleMoving();
-                    framesAfterShotOrMultiplication = 0;
+                    framesAfterShouttOrMultiplication = 0;
                     wasShoutingOrMultiplying = false;
                 }
 
