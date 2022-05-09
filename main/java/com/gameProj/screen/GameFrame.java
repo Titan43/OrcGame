@@ -14,6 +14,8 @@ public class GameFrame extends JFrame{
         GameScreen panel = GameScreen.getInstance(difficultySettings, windowSettings);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.add(panel);
+
+            //Ахтунг, костилі!!!
             this.setResizable(false);
             this.addComponentListener(new ComponentAdapter() {
                 @Override
@@ -21,6 +23,7 @@ public class GameFrame extends JFrame{
                     setLocation(0, 0);
                 }
             });
+            //Кінець костилів
 
             this.pack();
 
