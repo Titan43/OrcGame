@@ -1,6 +1,6 @@
 # OrcGame
 
-Small patriotic project written in Java programing language as a part of Object Oriented Programing course.
+Small project written in Java programing language as a part of Object Oriented Programing course.
 
 It was created using Swing and Javax Java libraries and a bit of creativity :)
 
